@@ -1,0 +1,130 @@
+<html>
+<body>
+
+	Vazão: 	<input type="number" id="vazao">
+			<select name="unidadesVazao" id="uvazao">
+    				<option value="m³/h">m³/h</option>
+    				<option value="l/s">l/s</option>
+    				<option value="l/min">l/min</option>
+    				<option value="l/h">l/h</option>
+    				<option value="gallon (US)/min">gallon (US)/min</option>
+    				<option value="gallon (US)/h">gallon (US)/h</option>
+    				<option value="gallon (UK)/s">gallon (UK)/s</option>
+    				<option value="gallon (UK)/h">gallon (UK)/h</option>
+    				<option value="ft³/s">ft³/s</option>
+    				<option value="ft³/min">ft³/min</option>
+    				<option value="m³/s">m³/s</option>
+  			</select><br><br>
+	Pressão:<input type="number" id="pressao">
+			<select name="unidadesPressao" id="upressao">
+    				<option value="mca">mca</option>
+    				<option value="bar">bar</option>
+    				<option value="kPa">kPa</option>
+    				<option value="atm">atm</option>
+    				<option value="ft H2O">ft H2O</option>
+    				<option value="in H2O">in H2O</option>
+    				<option value="in Hg">in Hg</option>
+    				<option value="kgf/cm²">kgf/cm²</option>
+    				<option value="lbf/ft²">lbf/ft²</option>
+    				<option value="mbar">mbar</option>
+    				<option value="mm H2O">mm H2O</option>
+    				<option value="mm Hg">mm Hg</option>
+					<option value="MPa">MPa</option>
+					<option value="Pa">Pa</option>
+					<option value="PSI">PSI</option>
+  			</select><br><br>
+	Eficiência:<input type="number" id="eficiencia">%<br><br>
+
+<p></p>
+
+<button onclick="myFunction()">Calcular</button>
+
+
+<p>POTÊNCIA</p>
+
+<input type="number" id="potencia1"> hp<br><br>
+<input type="number" id="potencia2"> cv<br><br>
+<input type="number" id="potencia3"> kW<br><br>
+
+<script>
+function myFunction() {
+  		// .................. ENTRADA DE DADOS PARA AS FÓRMULAS ...................
+
+
+		var q = document.getElementById("vazao").value;
+		var h = document.getElementById("pressao").value;
+		var e = document.getElementById("eficiencia").value; 
+
+		var uq = document.getElementById("uvazao").value
+		var uh = document.getElementById("upressao").value
+
+
+			// .............. CONDICIONAIS PARA TRANSF. DE UNIDADE.................
+
+			 var fq;
+
+			  if (uq == "m³/s") {fq = 0.000277778;
+			  } else if (uq == "ft³/min") {fq = 0.588578;
+			  } else if (uq == "ft³/s") {fq = 0.00980963; 
+			  } else if (uq == "gallon (UK)/h") {fq = 219.969; 
+			  } else if (uq == "gallon (UK)/s") {fq = 0.0611026; 
+			  } else if (uq == "gallon (US)/h") {fq = 264.172; 
+			  } else if (uq == "gallon (US)/min") {fq = 440.287; 
+			  } else if (uq == "l/h") {fq = 1000; 
+			  } else if (uq == "l/min") {fq = 166.667; 
+			  } else if (uq == "l/s") {fq = 0.277778; 
+			  } else if (uq == "m³/h") {fq = 1; 
+			  }	
+
+
+
+
+			 var fh;
+
+			  if (uh == "kPa") {fh = 9.80665;
+			  } else if (uh == "atm") {fh = 0.0967841;
+			  } else if (uh == "bar") {fh = 0.0980665; 
+			  } else if (uh == "ft H2O") {fh = 3.28084; 
+			  } else if (uh == "in H2O") {fh = 39.3701; 
+			  } else if (uh == "in Hg") {fh = 2.89591; 
+			  } else if (uh == "kgf/cm²") {fh = 0.1; 
+			  } else if (uh == "lbf/ft²") {fh = 204.816; 
+			  } else if (uh == "mbar") {fh = 98.0665; 
+			  } else if (uh == "mca") {fh = 1; 
+			  } else if (uh == "mm H2O") {fh = 1000; 
+			  } else if (uh == "mm Hg") {fh = 73.5561; 
+			  } else if (uh == "MPa") {fh = 0.00980665; 
+			  } else if (uh == "Pa") {fh = 9806.65; 
+			  } else if (uh == "PSI") {fh = 1.42233; 
+			  }	
+
+
+
+			
+		// .................. APLICANDO AS FÓRMULAS ..............................
+
+		var php = fh*fq*q*h/(e/100)/270
+
+		var pcv = php*1.01387
+
+		var pkw = php*0.7457
+
+		// ................... PARSER E FORMATAÇÃO DOS DADOS .....................
+
+
+		php = parseFloat(php.toFixed(2))
+
+		pcv = parseFloat(pcv.toFixed(2))
+
+		pkw = parseFloat(pkw.toFixed(2))
+
+
+	document.getElementById("potencia1").value = php
+	document.getElementById("potencia2").value = pcv
+	document.getElementById("potencia3").value = pkw
+
+}
+</script>
+
+</body>
+</html>
